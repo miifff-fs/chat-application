@@ -9,6 +9,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { WebSocket, WebSocketServer } from 'ws';
 
+import { listRecentMessages, saveMessage, storageMode } from './messageStore.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -29,7 +31,7 @@ app.get('/api/health', (_request, response) => {
   response.json({
     app: 'chat-application',
     status: 'ok',
-    storage: 'supabase-planned',
+    storage: storageMode,
     realtime: 'websocket-ready',
   });
 });
@@ -85,14 +87,11 @@ function createChatMessage(author, text) {
     id: randomUUID(),
     author,
     text,
-    time: new Intl.DateTimeFormat('en-US', {
-      hour: 'numeric',
-      minute: '2-digit',
-    }).format(new Date()),
+    createdAt: new Date().toISOString(),
   };
 }
 
-wss.on('connection', (socket) => {
+wss.on('connection', async (socket) => {
   const client = {
     id: randomUUID(),
     socket,
@@ -100,18 +99,20 @@ wss.on('connection', (socket) => {
   };
 
   clients.set(client.id, client);
+  const history = await listRecentMessages();
 
   sendJson(socket, {
     type: 'connection:ready',
     payload: {
       clientId: client.id,
       users: getOnlineUsers(),
+      history,
     },
   });
 
   broadcastUsers();
 
-  socket.on('message', (rawMessage) => {
+  socket.on('message', async (rawMessage) => {
     let event;
 
     try {
@@ -139,10 +140,12 @@ wss.on('connection', (socket) => {
         return;
       }
 
+      const message = await saveMessage(createChatMessage(client.username, text));
+
       broadcast({
         type: 'message:new',
         payload: {
-          message: createChatMessage(client.username, text),
+          message,
         },
       });
     }

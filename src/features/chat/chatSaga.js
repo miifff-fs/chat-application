@@ -4,6 +4,7 @@ import { call, cancel, fork, put, select, take, takeLatest } from 'redux-saga/ef
 import { appStarted } from '../../store/appActions.js';
 import {
   messageReceived,
+  messagesLoaded,
   onlineUsersUpdated,
   selectUsername,
   sendMessageRequested,
@@ -150,6 +151,7 @@ function* connectWebSocket() {
     if (serverEvent.type === 'connection:ready') {
       yield put(websocketConnected({ clientId: serverEvent.payload.clientId }));
       yield put(onlineUsersUpdated(serverEvent.payload.users));
+      yield put(messagesLoaded(serverEvent.payload.history));
     }
 
     if (serverEvent.type === 'users:update') {

@@ -53,6 +53,11 @@ const chatSlice = createSlice({
     onlineUsersUpdated(state, action) {
       state.onlineUsers = action.payload;
     },
+    messagesLoaded(state, action) {
+      if (action.payload.length > 0) {
+        state.messages = action.payload;
+      }
+    },
     messageReceived(state, action) {
       state.messages.push(action.payload);
     },
@@ -70,6 +75,7 @@ const chatSlice = createSlice({
 
 export const {
   messageReceived,
+  messagesLoaded,
   onlineUsersUpdated,
   sendMessageRequested,
   serverHealthFailed,
