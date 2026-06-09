@@ -3,9 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   selectHealth,
+  selectConnectionStatus,
+  selectDraftMessage,
   selectMessages,
   selectOnlineUsers,
   selectUsername,
+  sendMessageRequested,
   setDraftMessage,
   setUsername,
 } from './features/chat/chatSlice.js';
@@ -15,12 +18,30 @@ function App() {
   const dispatch = useDispatch();
   const health = useSelector(selectHealth);
   const username = useSelector(selectUsername);
+  const draftMessage = useSelector(selectDraftMessage);
+  const connectionStatus = useSelector(selectConnectionStatus);
   const messages = useSelector(selectMessages);
   const onlineUsers = useSelector(selectOnlineUsers);
 
   useEffect(() => {
     dispatch(appStarted());
   }, [dispatch]);
+
+  const isReadyToSend = connectionStatus === 'connected' && draftMessage.trim().length > 0;
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (!isReadyToSend) {
+      return;
+    }
+
+    dispatch(
+      sendMessageRequested({
+        text: draftMessage,
+      }),
+    );
+  }
 
   return (
     <main className="desktop">
@@ -51,8 +72,10 @@ function App() {
                 />
               </label>
               <div className="server-status">
-                <span className={`status-light ${health.status === 'ok' ? 'is-online' : ''}`} />
-                <span>{health.status === 'ok' ? 'online' : 'connecting'}</span>
+                <span
+                  className={`status-light ${connectionStatus === 'connected' ? 'is-online' : ''}`}
+                />
+                <span>{connectionStatus === 'connected' ? 'online' : 'connecting'}</span>
               </div>
             </div>
 
@@ -60,9 +83,9 @@ function App() {
               <h2>Buddy List</h2>
               <ul>
                 {onlineUsers.map((user) => (
-                  <li key={user}>
+                  <li key={user.id}>
                     <span className="buddy-dot" aria-hidden="true" />
-                    {user || 'Student'}
+                    {user.username || 'Student'}
                   </li>
                 ))}
               </ul>
@@ -90,13 +113,14 @@ function App() {
               ))}
             </div>
 
-            <form className="composer" aria-label="Message composer">
+            <form className="composer" aria-label="Message composer" onSubmit={handleSubmit}>
               <input
                 aria-label="Message text"
+                value={draftMessage}
                 placeholder="Type a message..."
                 onChange={(event) => dispatch(setDraftMessage(event.target.value))}
               />
-              <button type="button" disabled>
+              <button type="submit" disabled={!isReadyToSend}>
                 Send
               </button>
             </form>
