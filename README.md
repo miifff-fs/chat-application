@@ -5,6 +5,8 @@
 Realtime chat application based on the selected practice project:
 https://www.freecodecamp.org/news/how-to-build-a-chat-application-using-react-redux-redux-saga-and-web-sockets-47423e4bc21a/
 
+Deploy: https://chat-application-y3pr.onrender.com/
+
 ## Stack
 
 - React, Vite, Redux Toolkit, Redux-Saga
