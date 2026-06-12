@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "description": "Realtime chat application built with React, Redux-Saga, Express and WebSockets.",
+  "engines": {
+    "node": ">=20 <25"
+  },
   "scripts": {
     "dev": "node scripts/dev.js",
     "dev:client": "vite --host 0.0.0.0",
