@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  selectHealth,
   selectConnectionStatus,
   selectDraftMessage,
   selectMessages,
@@ -16,7 +15,6 @@ import { appStarted } from './store/appActions.js';
 
 function App() {
   const dispatch = useDispatch();
-  const health = useSelector(selectHealth);
   const username = useSelector(selectUsername);
   const draftMessage = useSelector(selectDraftMessage);
   const connectionStatus = useSelector(selectConnectionStatus);
@@ -96,7 +94,7 @@ function App() {
             <header className="chat-strip">
               <div>
                 <h2>General Room</h2>
-                <p>{health.realtime}</p>
+                <p>Realtime chat</p>
               </div>
               <span className="room-badge">public</span>
             </header>
@@ -126,7 +124,6 @@ function App() {
             </form>
           </section>
         </div>
-
       </section>
     </main>
   );

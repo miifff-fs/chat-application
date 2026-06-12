@@ -43,7 +43,6 @@ export async function listRecentMessages(limit = 30) {
     .limit(limit);
 
   if (error) {
-    console.warn('Supabase history loading failed:', error.message);
     return memoryMessages.slice(-limit).map(toClientMessage);
   }
 
@@ -70,7 +69,6 @@ export async function saveMessage(message) {
     .single();
 
   if (error) {
-    console.warn('Supabase message saving failed:', error.message);
     rememberMessage(record);
     return toClientMessage(record);
   }

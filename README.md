@@ -2,41 +2,36 @@
 
 [![Maintainability](https://qlty.sh/gh/miifff-fs/projects/chat-application/maintainability.svg)](https://qlty.sh/gh/miifff-fs/projects/chat-application)
 
-Realtime chat application built for production practice. The project is based on the selected catalogue idea: React + Redux-Saga + WebSockets.
-
-Selected project: https://www.freecodecamp.org/news/how-to-build-a-chat-application-using-react-redux-redux-saga-and-web-sockets-47423e4bc21a/
-
-## Features
-
-- Realtime messages with WebSocket
-- Online users list
-- Editable screen name
-- Recent message history
-- Supabase PostgreSQL storage with in-memory fallback
-- Retro messenger-style UI
+Realtime chat application based on the selected practice project:
+https://www.freecodecamp.org/news/how-to-build-a-chat-application-using-react-redux-redux-saga-and-web-sockets-47423e4bc21a/
 
 ## Stack
 
-- Frontend: React, Vite, Redux Toolkit, Redux-Saga
-- Backend: Node.js, Express, ws
-- Database: Supabase PostgreSQL
-- Deployment: Render Web Service
-- Code quality: Qlty
+- React, Vite, Redux Toolkit, Redux-Saga
+- Node.js, Express, WebSocket (`ws`)
+- Supabase PostgreSQL
+- Render
 
-## Local Setup
+## Features
+
+- realtime chat messages
+- online users list
+- editable screen name
+- recent message history
+- retro messenger UI
+
+## Run Locally
 
 ```bash
 npm install
 npm run dev
 ```
 
-Frontend: http://localhost:5173
-
-Backend health check: http://localhost:3001/api/health
+Open `http://localhost:5173`.
 
 ## Environment
 
-Copy `.env.example` to `.env` and fill Supabase values when database storage is needed.
+Create `.env` from `.env.example`.
 
 ```bash
 PORT=3001
@@ -46,15 +41,11 @@ SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 ```
 
-If Supabase variables are empty, the app uses temporary in-memory message history.
+Without Supabase values, message history is stored in memory.
 
 ## Database
 
-Run the SQL from `docs/database.sql` in Supabase SQL Editor.
-
-Main table:
-
-- `messages`: stores chat message id, author, text content and creation time.
+Run `docs/database.sql` in Supabase SQL Editor.
 
 ## Scripts
 
@@ -67,10 +58,4 @@ npm run lint
 
 ## Deployment
 
-The project includes `render.yaml` for Render. Create a Render Blueprint or Web Service from this repository, then add Supabase environment variables in the Render dashboard.
-
-After deployment, update this section with the live URL:
-
-```text
-https://<render-service-name>.onrender.com
-```
+Use `render.yaml` to deploy the project as a Render Web Service.
