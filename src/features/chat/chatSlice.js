@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  username: 'Student',
+  username: 'Guest',
   draftMessage: '',
   connectionStatus: 'idle',
   clientId: null,
@@ -12,7 +12,7 @@ const initialState = {
   onlineUsers: [
     {
       id: 'local',
-      username: 'Student',
+      username: 'Guest',
     },
   ],
   messages: [

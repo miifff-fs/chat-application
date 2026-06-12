@@ -83,7 +83,7 @@ function App() {
                 {onlineUsers.map((user) => (
                   <li key={user.id}>
                     <span className="buddy-dot" aria-hidden="true" />
-                    {user.username || 'Student'}
+                    {user.username || 'Guest'}
                   </li>
                 ))}
               </ul>
