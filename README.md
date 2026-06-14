@@ -5,7 +5,7 @@
 Realtime chat application based on the selected practice project:
 https://www.freecodecamp.org/news/how-to-build-a-chat-application-using-react-redux-redux-saga-and-web-sockets-47423e4bc21a/
 
-Live demo: https://chat-application-y3pr.onrender.com/
+Deploy: https://chat-application-y3pr.onrender.com/
 
 ## Stack
 
@@ -21,6 +21,9 @@ Live demo: https://chat-application-y3pr.onrender.com/
 - editable screen name
 - recent message history
 - retro messenger UI
+
+## Demonstration
+<img width="1020" alt="chat-demo" src="https://github.com/user-attachments/assets/ae866795-5853-46d9-81c1-9e83f77fb729" />
 
 ## Run Locally
 
